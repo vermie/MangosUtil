@@ -1,0 +1,20 @@
+# outpt
+bin
+obj
+
+# preferences
+*.user
+*.userprefs
+*.suo
+
+# testing
+TestResults
+
+# version control
+*.patch
+*.diff
+
+# misc
+*.sln.cache
+.DS_Store
+
