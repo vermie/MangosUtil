@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -9,7 +8,6 @@ using ParseDelegate = System.Func<System.Linq.Expressions.MethodCallExpression, 
 
 namespace Mangos
 {
-    [DebuggerNonUserCode]
     public class Parser
     {
         private static Parser _parser = new Parser();
