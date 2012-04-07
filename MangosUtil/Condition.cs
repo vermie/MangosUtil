@@ -2,8 +2,25 @@ using System;
 
 namespace Mangos
 {
-    public class Condition
+    public interface ICondition
     {
+        int Id { get; set; }
+
+        int Cond { get; }
+
+        int Val1 { get; }
+
+        int Val2 { get; }
+    }
+
+    public class Condition : ICondition
+    {
+        public int Id
+        {
+            get;
+            set;
+        }
+
         public int Cond
         {
             get;
