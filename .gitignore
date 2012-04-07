@@ -16,5 +16,6 @@ TestResults
 
 # misc
 *.sln.cache
+*.pidb
 .DS_Store
 
