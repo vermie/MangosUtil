@@ -67,7 +67,7 @@ namespace Mangos
 
         #endregion
 
-        private Condition Parse(MethodCallExpression expr, bool not)
+        private ICondition Parse(MethodCallExpression expr, bool not)
         {
             var parseInfo = _parseInfoLookUp[expr.Method.Name];
 
@@ -76,66 +76,56 @@ namespace Mangos
 
             var condition = _parseInfoLookUp[expr.Method.Name].Parse(expr, not);
 
-            Console.WriteLine(condition);
-
             return condition;
         }
 
         #region Expression tree traversal
 
-        public void Parse(Expression expression)
+        private ICondition Parse(Expression expression)
         {
             switch (expression.NodeType)
             {
             case ExpressionType.Call:
-                ParseCall(expression as MethodCallExpression);
-                break;
+                return ParseCall(expression as MethodCallExpression);
 
             case ExpressionType.OrElse:
             case ExpressionType.Or:
-                ParseOr(expression as BinaryExpression);
-                break;
+                return ParseOr(expression as BinaryExpression);
 
             case ExpressionType.AndAlso:
             case ExpressionType.And:
-                ParseAnd(expression as BinaryExpression);
-                break;
+                return ParseAnd(expression as BinaryExpression);
 
             case ExpressionType.Not:
                 var expr = ((UnaryExpression)expression).Operand as MethodCallExpression;
-                ParseCall(expr, true);
-                break;
+                return ParseCall(expr, true);
 
             default:
-                Console.WriteLine(expression.NodeType);
-                break;
+                throw new InvalidOperationException(expression.NodeType + " is an unsupported expression type.");
             }
         }
 
-        private void ParseCall(MethodCallExpression expression, bool not = false)
+        private ICondition ParseCall(MethodCallExpression expression, bool not = false)
         {
-            Parse(expression, not);
+            return Parse(expression, not);
         }
 
-        private void ParseOr(BinaryExpression expression)
+        private ICondition ParseOr(BinaryExpression expression)
         {
-            Parse(expression.Left);
-            Console.WriteLine(" or ");
-            Parse(expression.Right);
+            return new OrCondition(Parse(expression.Left), Parse(expression.Right));
         }
 
-        private void ParseAnd(BinaryExpression expression)
+        private ICondition ParseAnd(BinaryExpression expression)
         {
-            Parse(expression.Left);
-            Console.WriteLine(" and ");
-            Parse(expression.Right);
+            return new AndCondition(Parse(expression.Left), Parse(expression.Right));
         }
 
         #endregion
 
-        public static void Parse(Expression<Func<ConditionFacade, bool>> expression)
+        public static ICondition Parse(Expression<Func<ConditionFacade, bool>> expression)
         {
-            _parser.Parse(expression.Body);
+            var expr = _parser.Parse(expression.Body);
+            return expr;
         }
     }
 }

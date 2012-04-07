@@ -6,7 +6,7 @@ namespace Mangos
     {
         public static void Main(string[] args)
         {
-            Parser.Parse(c => c.IsHorde() && !c.HasAchievement(29) || c.HasAura(123,2));
+            var expr = Parser.Parse(c => (c.HasAura(1234, 1) && c.IsHorde()) || (c.HasAura(1235, 1) && c.IsAlliance()));
         }
     }
 }
