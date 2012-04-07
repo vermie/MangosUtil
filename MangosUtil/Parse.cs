@@ -122,9 +122,13 @@ namespace Mangos
 
         #endregion
 
-        public static ICondition Parse(Expression<Func<ConditionFacade, bool>> expression)
+        public static ICondition Parse(ref int id, Expression<Func<ConditionFacade, bool>> expression)
         {
             var expr = _parser.Parse(expression.Body);
+
+            foreach (var condition in expr.Conditions)
+                condition.Id = id++;
+
             return expr;
         }
     }
