@@ -39,9 +39,9 @@ namespace Mangos
             set;
         }
 
-        public override string ToString()
+        public sealed override string ToString()
         {
-            return string.Format("[Condition: Cond={0}, Val1={1}, Val2={2}]", Cond, Val1, Val2);
+            return string.Format("({0}, {1}, {2}, {3})", Id, Cond, Val1, Val2);
         }
     }
 }
