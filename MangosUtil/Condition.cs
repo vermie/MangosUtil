@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Mangos
 {
@@ -11,6 +12,8 @@ namespace Mangos
         int Val1 { get; }
 
         int Val2 { get; }
+
+        IEnumerable<ICondition> Conditions { get; }
     }
 
     public class Condition : ICondition
@@ -39,6 +42,8 @@ namespace Mangos
             set;
         }
 
+        public IEnumerable<ICondition> Conditions { get { yield return this; } }
+
         public sealed override string ToString()
         {
             return string.Format("({0}, {1}, {2}, {3})", Id, Cond, Val1, Val2);
@@ -58,6 +63,20 @@ namespace Mangos
         public int Val1 { get { return _lhs.Id; } }
 
         public int Val2 { get { return _rhs.Id; } }
+
+        public IEnumerable<ICondition> Conditions
+        {
+            get
+            {
+                foreach (var condition in _lhs.Conditions)
+                    yield return condition;
+
+                foreach (var condition in _rhs.Conditions)
+                    yield return condition;
+
+                yield return this;
+            }
+        }
 
         private ICondition _lhs;
         private ICondition _rhs;
