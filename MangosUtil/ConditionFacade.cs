@@ -22,7 +22,7 @@ namespace Mangos
         /// Use <example>!HasAura(...)</example> to validate the non-existence of specified aura.
         /// </summary>
         [Condition(Negatable = true)]
-        public bool HasAura(int spellId, int effectIndex)
+        public bool HasAura(uint spellId, uint effectIndex)
         {
             return true;
         }
@@ -31,11 +31,14 @@ namespace Mangos
         {
             var args = expr.Arguments.Cast<ConstantExpression>().ToArray();
 
+            short Cond = (short)(not ? 11 : 1);
+            uint Val1 = (uint)args[0].Value;
+            uint Val2 = (uint)args[1].Value;
             return new Condition()
             {
-                Cond = not ? 11 : 1,
-                Val1 = (int)args[0].Value,
-                Val2 = (int)args[1].Value
+                Cond = (short)(not ? 11 : 1),
+                Val1 = (uint)args[0].Value,
+                Val2 = (uint)args[1].Value
             };
         }
 
@@ -47,7 +50,7 @@ namespace Mangos
         /// Use <example>!HasItem(...)</example> to validate the non-existence of specified item.
         /// </summary>
         [Condition(Negatable = true)]
-        public bool HasItem(int itemId, int count)
+        public bool HasItem(uint itemId, uint count)
         {
             return true;
         }
@@ -58,9 +61,9 @@ namespace Mangos
 
             return new Condition()
             {
-                Cond = not ? 16 : 2,
-                Val1 = (int)args[0].Value,
-                Val2 = (int)args[1].Value
+                Cond = (short)(not ? 16 : 2),
+                Val1 = (uint)args[0].Value,
+                Val2 = (uint)args[1].Value
             };
         }
 
@@ -69,7 +72,7 @@ namespace Mangos
         #region CONDITION_ITEM_EQUIPPED
 
         [Condition]
-        public bool HasItemEquipped(int itemId)
+        public bool HasItemEquipped(uint itemId)
         {
             return true;
         }
@@ -81,8 +84,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 3,
-                Val1 = (int)arg.Value,
-                Val2 = 0
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
             };
         }
 
@@ -91,7 +94,7 @@ namespace Mangos
         #region CONDITION_AREAID
 
         [Condition]
-        public bool IsInArea(int areaId)
+        public bool IsInArea(uint areaId)
         {
             return true;
         }
@@ -103,8 +106,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 4,
-                Val1 = (int)arg.Value,
-                Val2 = 0
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
             };
         }
 
@@ -113,7 +116,7 @@ namespace Mangos
         #region CONDITION_REPUTATION_RANK
 
         [Condition]
-        public bool HasReputationRank(int factionId, int minRank)
+        public bool HasReputationRank(uint factionId, uint minRank)
         {
             return true;
         }
@@ -125,8 +128,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 5,
-                Val1 = (int)args[0].Value,
-                Val2 = (int)args[1].Value
+                Val1 = (uint)args[0].Value,
+                Val2 = (uint)args[1].Value
             };
         }
 
@@ -146,7 +149,7 @@ namespace Mangos
             return true;
         }
 
-        private static Condition ParseTeam(int team)
+        private static Condition ParseTeam(uint team)
         {
             return new Condition()
             {
@@ -158,12 +161,12 @@ namespace Mangos
 
         private static Condition ParseIsHorde(MethodCallExpression expr, bool not)
         {
-            return ParseTeam(67);
+            return ParseTeam(67u);
         }
 
         private static Condition ParseIsAlliance(MethodCallExpression expr, bool not)
         {
-            return ParseTeam(469);
+            return ParseTeam(469u);
         }
 
         #endregion
@@ -171,7 +174,7 @@ namespace Mangos
         #region CONDITION_SKILL
 
         [Condition]
-        public bool IsSkillAtLevel(int skillId, int minLevel)
+        public bool IsSkillAtLevel(uint skillId, uint minLevel)
         {
             return true;
         }
@@ -183,8 +186,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 7,
-                Val1 = (int)args[0].Value,
-                Val2 = (int)args[1].Value
+                Val1 = (uint)args[0].Value,
+                Val2 = (uint)args[1].Value
             };
         }
 
@@ -193,7 +196,7 @@ namespace Mangos
         #region CONDITION_QUESTREWARDED
 
         [Condition]
-        public bool HasCompletedQuest(int questId)
+        public bool HasCompletedQuest(uint questId)
         {
             return true;
         }
@@ -205,8 +208,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 8,
-                Val1 = (int)arg.Value,
-                Val2 = 0
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
             };
         }
 
@@ -215,7 +218,7 @@ namespace Mangos
         #region CONDITION_QUESTTAKEN
 
         [Condition]
-        public bool IsOnQuest(int questId)
+        public bool IsOnQuest(uint questId)
         {
             return true;
         }
@@ -227,8 +230,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 9,
-                Val1 = (int)arg.Value,
-                Val2 = 0
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
             };
         }
 
@@ -247,8 +250,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 10,
-                Val1 = 0,
-                Val2 = 0
+                Val1 = 0u,
+                Val2 = 0u
             };
         }
 
@@ -257,7 +260,7 @@ namespace Mangos
         #region CONDITION_ACTIVE_EVENT
 
         [Condition]
-        public bool IsEventActive(int eventId)
+        public bool IsEventActive(uint eventId)
         {
             return true;
         }
@@ -269,8 +272,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 12,
-                Val1 = (int)arg.Value,
-                Val2 = 0
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
             };
         }
 
@@ -282,7 +285,7 @@ namespace Mangos
         /// Use <example>!HasAreaFlag(...)</example> to validate the non-existence of flags.
         /// </summary>
         [Condition(Negatable = true)]
-        public bool HasAreaFlag(int areaFlags)
+        public bool HasAreaFlag(uint areaFlags)
         {
             return true;
         }
@@ -294,8 +297,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 13,
-                Val1 = not ? 0xFF : (int)arg.Value,
-                Val2 = not ? (int)arg.Value : 0xFF
+                Val1 = not ? 0xFFu : (uint)arg.Value,
+                Val2 = not ? (uint)arg.Value : 0xFFu
             };
         }
 
@@ -304,13 +307,13 @@ namespace Mangos
         #region CONDITION_RACE_CLASS
 
         [Condition]
-        public bool HasRace(int raceFlags)
+        public bool HasRace(uint raceFlags)
         {
             return true;
         }
 
         [Condition]
-        public bool HasClass(int classFlags)
+        public bool HasClass(uint classFlags)
         {
             return true;
         }
@@ -322,8 +325,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 14,
-                Val1 = (int)arg.Value,
-                Val2 = 0xFF
+                Val1 = (uint)arg.Value,
+                Val2 = 0xFFu
             };
         }
 
@@ -334,8 +337,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 14,
-                Val1 = 0xFF,
-                Val2 = (int)arg.Value
+                Val1 = 0xFFu,
+                Val2 = (uint)arg.Value
             };
         }
 
@@ -344,48 +347,48 @@ namespace Mangos
         #region CONDITION_LEVEL
 
         [Condition]
-        public bool IsLevel(int level)
+        public bool IsLevel(uint level)
         {
             return true;
         }
 
         [Condition]
-        public bool IsAtLeastLevel(int level)
+        public bool IsAtLeastLevel(uint level)
         {
             return true;
         }
 
         [Condition]
-        public bool IsOverLevel(int level)
+        public bool IsOverLevel(uint level)
         {
             return true;
         }
 
-        private static Condition ParseLevel(MethodCallExpression method, int val2)
+        private static Condition ParseLevel(MethodCallExpression method, uint val2)
         {
             var arg = (ConstantExpression)method.Arguments[0];
 
             return new Condition()
             {
                 Cond = 15,
-                Val1 = (int)arg.Value,
+                Val1 = (uint)arg.Value,
                 Val2 = val2
             };
         }
 
         private static Condition ParseIsLevel(MethodCallExpression method, bool not)
         {
-            return ParseLevel(method, 0);
+            return ParseLevel(method, 0u);
         }
 
         private static Condition ParseIsAtLeastLevel(MethodCallExpression method, bool not)
         {
-            return ParseLevel(method, 1);
+            return ParseLevel(method, 1u);
         }
 
         private static Condition ParseIsOverLevel(MethodCallExpression method, bool not)
         {
-            return ParseLevel(method, 2);
+            return ParseLevel(method, 2u);
         }
 
         #endregion
@@ -396,7 +399,7 @@ namespace Mangos
         /// Use <example>!KnowsSpell(...)</example> to validate the non-existence of specified spell.
         /// </summary>
         [Condition(Negatable = true)]
-        public bool KnowsSpell(int spellId)
+        public bool KnowsSpell(uint spellId)
         {
             return true;
         }
@@ -408,8 +411,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 17,
-                Val1 = (int)arg.Value,
-                Val2 = not ? 1 : 0
+                Val1 = (uint)arg.Value,
+                Val2 = not ? 1u : 0u
             };
         }
 
@@ -418,7 +421,7 @@ namespace Mangos
         #region CONDITION_QUESTAVAILABLE
 
         [Condition]
-        public bool CanAcceptQuest(int questId)
+        public bool CanAcceptQuest(uint questId)
         {
             return true;
         }
@@ -430,8 +433,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 19,
-                Val1 = (int)arg.Value,
-                Val2 = 0
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
             };
         }
 
@@ -443,7 +446,7 @@ namespace Mangos
         /// Use <example>!HasAchievement(...)</example> to validate the non-existence of specified achievement.
         /// </summary>
         [Condition(Negatable = true)]
-        public bool HasAchievement(int achievementId)
+        public bool HasAchievement(uint achievementId)
         {
             return true;
         }
@@ -455,8 +458,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 20,
-                Val1 = (int)arg.Value,
-                Val2 = not ? 1 : 0
+                Val1 = (uint)arg.Value,
+                Val2 = not ? 1u : 0u
             };
         }
 
@@ -468,7 +471,7 @@ namespace Mangos
         /// Use <example>!HasAchievement(...)</example> to validate the non-existence of specified achievement.
         /// </summary>
         [Condition(Negatable = true)]
-        public bool HasRealmAchievement(int achievementId)
+        public bool HasRealmAchievement(uint achievementId)
         {
             return true;
         }
@@ -480,8 +483,8 @@ namespace Mangos
             return new Condition()
             {
                 Cond = 21,
-                Val1 = (int)arg.Value,
-                Val2 = not ? 1 : 0
+                Val1 = (uint)arg.Value,
+                Val2 = not ? 1u : 0u
             };
         }
 

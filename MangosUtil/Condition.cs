@@ -5,38 +5,38 @@ namespace Mangos
 {
     public interface ICondition
     {
-        int Id { get; set; }
+        ushort Id { get; set; }
 
-        int Cond { get; }
+        short Cond { get; }
 
-        int Val1 { get; }
+        uint Val1 { get; }
 
-        int Val2 { get; }
+        uint Val2 { get; }
 
         IEnumerable<ICondition> Conditions { get; }
     }
 
     public class Condition : ICondition
     {
-        public int Id
+        public ushort Id
         {
             get;
             set;
         }
 
-        public int Cond
+        public short Cond
         {
             get;
             set;
         }
 
-        public int Val1
+        public uint Val1
         {
             get;
             set;
         }
 
-        public int Val2
+        public uint Val2
         {
             get;
             set;
@@ -52,17 +52,17 @@ namespace Mangos
 
     public abstract class BinaryCondition : ICondition
     {
-        public int Id
+        public ushort Id
         {
             get;
             set;
         }
 
-        public abstract int Cond { get; }
+        public abstract short Cond { get; }
 
-        public int Val1 { get { return _lhs.Id; } }
+        public uint Val1 { get { return _lhs.Id; } }
 
-        public int Val2 { get { return _rhs.Id; } }
+        public uint Val2 { get { return _rhs.Id; } }
 
         public IEnumerable<ICondition> Conditions
         {
@@ -95,7 +95,7 @@ namespace Mangos
 
     public class OrCondition : BinaryCondition
     {
-        public override int Cond { get { return -1; } }
+        public override short Cond { get { return -1; } }
 
         public OrCondition(ICondition lhs, ICondition rhs) : base(lhs, rhs)
         {
@@ -104,7 +104,7 @@ namespace Mangos
 
     public class AndCondition : BinaryCondition
     {
-        public override int Cond { get { return -2; } }
+        public override short Cond { get { return -2; } }
 
         public AndCondition(ICondition lhs, ICondition rhs) : base(lhs, rhs)
         {
