@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace Mangos
+namespace Mangos.Framework
 {
     public interface ICondition
     {
@@ -14,6 +15,32 @@ namespace Mangos
         uint Val2 { get; }
 
         IEnumerable<ICondition> Conditions { get; }
+    }
+
+    public static class ConditionExtensions
+    {
+        internal static string ToStringImpl(this ICondition condition)
+        {
+            return string.Format("({0}, {1}, {2}, {3})", condition.Id, condition.Cond, condition.Val1, condition.Val2);
+        }
+
+        public static string ToSqlInsert(this ICondition condition)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("insert into conditions values");
+
+            foreach (var c in condition.Conditions)
+            {
+                sb.AppendFormat(
+                    "{0}  {1}{2}",
+                    Environment.NewLine,
+                    c.ToString(),
+                    c == condition ? ";" : ",");
+            }
+
+            return sb.AppendLine().ToString();
+        }
     }
 
     public class Condition : ICondition
@@ -46,7 +73,7 @@ namespace Mangos
 
         public sealed override string ToString()
         {
-            return string.Format("({0}, {1}, {2}, {3})", Id, Cond, Val1, Val2);
+            return this.ToStringImpl();
         }
     }
 
@@ -89,7 +116,7 @@ namespace Mangos
 
         public sealed override string ToString()
         {
-            return string.Format("({0}, {1}, {2}, {3})", Id, Cond, Val1, Val2);
+            return this.ToStringImpl();
         }
     }
 

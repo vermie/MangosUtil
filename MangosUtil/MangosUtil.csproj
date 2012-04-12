@@ -35,14 +35,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parse.cs" />
-    <Compile Include="ConditionFacade.cs" />
-    <Compile Include="Condition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Framework\Condition.cs" />
+    <Compile Include="Framework\ConditionFacade.cs" />
+    <Compile Include="Framework\Parse.cs" />
     <Compile Include="Runner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Framework\" />
   </ItemGroup>
 </Project>

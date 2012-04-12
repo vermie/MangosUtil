@@ -4,9 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-using ParseDelegate = System.Func<System.Linq.Expressions.MethodCallExpression, bool, Mangos.Condition>;
+using ParseDelegate = System.Func<System.Linq.Expressions.MethodCallExpression, bool, Mangos.Framework.Condition>;
 
-namespace Mangos
+namespace Mangos.Framework
 {
     public class Parser
     {

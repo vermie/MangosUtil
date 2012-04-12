@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Mangos
+namespace Mangos.Framework
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class ConditionAttribute : Attribute
@@ -31,9 +31,6 @@ namespace Mangos
         {
             var args = expr.Arguments.Cast<ConstantExpression>().ToArray();
 
-            short Cond = (short)(not ? 11 : 1);
-            uint Val1 = (uint)args[0].Value;
-            uint Val2 = (uint)args[1].Value;
             return new Condition()
             {
                 Cond = (short)(not ? 11 : 1),
