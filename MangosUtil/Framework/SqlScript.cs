@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -38,13 +39,19 @@ namespace Mangos.Framework
 
         public string ToSqlInsert()
         {
-            var sb = new StringBuilder();
+            var writer = new StringWriter();
+            ToSqlInsert(writer);
 
+            return writer.ToString();
+        }
+
+        public void ToSqlInsert(TextWriter writer)
+        {
             foreach (var id in _comments.Keys)
-                sb.AppendFormat("-- {0} => {1}{2}", id, _comments[id], Environment.NewLine);
+                writer.Write("-- {0} => {1}{2}", id, _comments[id], Environment.NewLine);
 
-            sb.AppendLine();
-            sb.Append("insert into conditions values");
+            writer.WriteLine();
+            writer.Write("insert into conditions values");
 
             var last = _conditions.Last();
 
@@ -54,14 +61,24 @@ namespace Mangos.Framework
 
             foreach (var condition in conditions)
             {
-                sb.AppendFormat(
+                writer.Write(
                     "{0}  {1}{2}",
                     Environment.NewLine,
                     condition.ToString(),
                     condition == last ? ";" : ",");
             }
 
-            return sb.AppendLine().ToString();
+            writer.WriteLine();
+            writer.Flush();
+        }
+
+        public void WriteTo(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+                throw new ArgumentException(string.Format(@"""{0}"" does not exist or is not a directory", folderPath));
+
+            using (var writer = new StreamWriter(File.OpenWrite(Path.Combine(folderPath, this.FileName))))
+                this.ToSqlInsert(writer);
         }
     }
 }
