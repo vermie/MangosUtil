@@ -10,17 +10,23 @@ namespace Mangos.Framework
     {
         public abstract string FileName { get; }
         public abstract ushort StartingId { get; }
-        public ushort CurrentId { get; private set; }
+
+        private ushort _currentId = 0;
 
         private List<ICondition> _conditions = new List<ICondition>();
         private Dictionary<ushort,string> _comments = new Dictionary<ushort, string>();
 
         public void AddCondition(string comment, Expression<Func<ConditionFacade,bool>> expression)
         {
-            var currentId = CurrentId;
-            var condition = Parser.Parse(ref currentId, expression);
+            if (_currentId == 0)
+            {
+                if (StartingId < 100)
+                    throw new Exception("StartingId must exceed 99");
+                _currentId = StartingId;
+            }
+
+            var condition = Parser.Parse(ref _currentId, expression);
             _conditions.Add(condition);
-            CurrentId = currentId;
 
             _comments[condition.Id] = comment;
         }
