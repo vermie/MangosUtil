@@ -39,6 +39,7 @@
     <Compile Include="Framework\Condition.cs" />
     <Compile Include="Framework\ConditionFacade.cs" />
     <Compile Include="Framework\Parse.cs" />
+    <Compile Include="Framework\SqlScript.cs" />
     <Compile Include="Runner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
