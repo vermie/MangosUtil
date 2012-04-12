@@ -41,10 +41,12 @@
     <Compile Include="Framework\Parse.cs" />
     <Compile Include="Framework\SqlScript.cs" />
     <Compile Include="Runner.cs" />
+    <Compile Include="Scripts\Example.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Framework\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
 </Project>
