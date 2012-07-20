@@ -520,6 +520,32 @@ namespace Mangos.Framework
         }
 
         #endregion
+
+        #region CONDITION_ACTIVE_HOLIDAY, CONDITION_NOT_ACTIVE_HOLIDAY
+
+        /// <summary>
+        /// Use <example>!IsHolidayActive(...)</example> to validate the holiday is inactive.
+        /// </summary>
+        [Condition(Negatable = true)]
+        public static bool IsHolidayActive(uint eventId)
+        {
+            return true;
+        }
+
+        private static Condition ParseIsHolidayActive(MethodCallExpression expr, bool not)
+        {
+            var arg = (ConstantExpression)expr.Arguments[0];
+
+            return new Condition()
+            {
+                Cond = not ? ConditionType.NotActiveHoliday : ConditionType.ActiveHoliday,
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
+            };
+        }
+
+        #endregion
+
     }
 }
 
