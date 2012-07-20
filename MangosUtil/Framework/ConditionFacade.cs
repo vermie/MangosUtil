@@ -546,6 +546,27 @@ namespace Mangos.Framework
 
         #endregion
 
+        #region CONDITION_LEARNABLE_ABILITY
+
+        [Condition]
+        public bool CanLearnSpellOrAbility(uint spellOrSkillId, uint requiredItemId = 0)
+        {
+            return true;
+        }
+
+        private static Condition ParseCanLearnSpell(MethodCallExpression expr, bool not)
+        {
+            var args = expr.Arguments.Cast<ConstantExpression>().ToArray();
+
+            return new Condition()
+            {
+                Cond = ConditionType.LearnableAbility,
+                Val1 = (uint)args[0].Value,
+                Val2 = (uint)args[1].Value
+            };
+        }
+
+        #endregion
     }
 }
 
