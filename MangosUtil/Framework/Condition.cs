@@ -77,6 +77,40 @@ namespace Mangos.Framework
         }
     }
 
+    public class NotCondition : ICondition
+    {
+        public ushort Id { get; set; }
+
+        public short Cond { get { return -3; } }
+
+        public uint Val1 { get { return _cond.Id; } }
+
+        public uint Val2 { get { return 0; } }
+
+        public IEnumerable<ICondition> Conditions
+        {
+            get
+            {
+                foreach (var condition in _cond.Conditions)
+                    yield return condition;
+
+                yield return this;
+            }
+        }
+
+        private ICondition _cond;
+
+        public NotCondition(ICondition cond)
+        {
+            _cond = cond;
+        }
+
+        public sealed override string ToString()
+        {
+            return this.ToStringImpl();
+        }
+    }
+
     public abstract class BinaryCondition : ICondition
     {
         public ushort Id

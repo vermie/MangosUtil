@@ -71,10 +71,10 @@ namespace Mangos.Framework
         {
             var parseInfo = _parseInfoLookUp[expr.Method.Name];
 
-            if (not && !parseInfo.Negatable)
-                throw new InvalidOperationException("Cannot apply operator ! to " + expr.Method.Name);
+            ICondition condition = _parseInfoLookUp[expr.Method.Name].Parse(expr, not);
 
-            var condition = _parseInfoLookUp[expr.Method.Name].Parse(expr, not);
+            if (not && !parseInfo.Negatable)
+                condition = new NotCondition(condition);
 
             return condition;
         }
