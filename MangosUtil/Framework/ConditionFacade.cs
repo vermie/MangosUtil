@@ -119,7 +119,7 @@ namespace Mangos.Framework
 
         #endregion
 
-        #region CONDITION_REPUTATION_RANK
+        #region CONDITION_REPUTATION_RANK, CONDITION_REPUTATION_RANK_MAX
 
         [Condition]
         public bool HasReputationRank(uint factionId, uint minRank)
@@ -134,6 +134,30 @@ namespace Mangos.Framework
             return new Condition()
             {
                 Cond = ConditionType.ReputationRankMin,
+                Val1 = (uint)args[0].Value,
+                Val2 = (uint)args[1].Value
+            };
+        }
+
+        /// <summary>
+        /// Validates that the player has the specified rank or worse.
+        /// </summary>
+        /// <param name="factionId"></param>
+        /// <param name="maxRank"></param>
+        /// <returns></returns>
+        [Condition]
+        public bool HasReputationRankMax(uint factionId, uint maxRank)
+        {
+            return true;
+        }
+
+        private static Condition ParseHasReputationRankBelow(MethodCallExpression expr, bool not)
+        {
+            var args = expr.Arguments.Cast<ConstantExpression>().ToArray();
+
+            return new Condition()
+            {
+                Cond = ConditionType.ReputationRankMax,
                 Val1 = (uint)args[0].Value,
                 Val2 = (uint)args[1].Value
             };
