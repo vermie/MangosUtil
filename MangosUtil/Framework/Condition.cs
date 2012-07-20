@@ -8,7 +8,7 @@ namespace Mangos.Framework
     {
         ushort Id { get; set; }
 
-        short Cond { get; }
+        ConditionType Cond { get; }
 
         uint Val1 { get; }
 
@@ -51,7 +51,7 @@ namespace Mangos.Framework
             set;
         }
 
-        public short Cond
+        public ConditionType Cond
         {
             get;
             set;
@@ -81,7 +81,7 @@ namespace Mangos.Framework
     {
         public ushort Id { get; set; }
 
-        public short Cond { get { return -3; } }
+        public ConditionType Cond { get { return ConditionType.Not; } }
 
         public uint Val1 { get { return _cond.Id; } }
 
@@ -119,7 +119,7 @@ namespace Mangos.Framework
             set;
         }
 
-        public abstract short Cond { get; }
+        public abstract ConditionType Cond { get; }
 
         public uint Val1 { get { return _lhs.Id; } }
 
@@ -156,7 +156,7 @@ namespace Mangos.Framework
 
     public class OrCondition : BinaryCondition
     {
-        public override short Cond { get { return -1; } }
+        public override ConditionType Cond { get { return ConditionType.Or; } }
 
         public OrCondition(ICondition lhs, ICondition rhs) : base(lhs, rhs)
         {
@@ -165,7 +165,7 @@ namespace Mangos.Framework
 
     public class AndCondition : BinaryCondition
     {
-        public override short Cond { get { return -2; } }
+        public override ConditionType Cond { get { return ConditionType.And; } }
 
         public AndCondition(ICondition lhs, ICondition rhs) : base(lhs, rhs)
         {

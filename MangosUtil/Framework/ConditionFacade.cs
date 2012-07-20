@@ -33,7 +33,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = (short)(not ? 11 : 1),
+                Cond = (not ? ConditionType.NoAura : ConditionType.Aura),
                 Val1 = (uint)args[0].Value,
                 Val2 = (uint)args[1].Value
             };
@@ -58,7 +58,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = (short)(not ? 16 : 2),
+                Cond = not ? ConditionType.NoItem : ConditionType.Item,
                 Val1 = (uint)args[0].Value,
                 Val2 = (uint)args[1].Value
             };
@@ -80,7 +80,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 3,
+                Cond = ConditionType.ItemEquipped,
                 Val1 = (uint)arg.Value,
                 Val2 = 0u
             };
@@ -102,7 +102,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 4,
+                Cond = ConditionType.AreaId,
                 Val1 = (uint)arg.Value,
                 Val2 = 0u
             };
@@ -124,7 +124,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 5,
+                Cond = ConditionType.ReputationRankMin,
                 Val1 = (uint)args[0].Value,
                 Val2 = (uint)args[1].Value
             };
@@ -150,7 +150,7 @@ namespace Mangos.Framework
         {
             return new Condition()
             {
-                Cond = 6,
+                Cond = ConditionType.Team,
                 Val1 = team,
                 Val2 = 0
             };
@@ -182,7 +182,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 7,
+                Cond = ConditionType.Skill,
                 Val1 = (uint)args[0].Value,
                 Val2 = (uint)args[1].Value
             };
@@ -204,7 +204,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 8,
+                Cond = ConditionType.QuestRewarded,
                 Val1 = (uint)arg.Value,
                 Val2 = 0u
             };
@@ -226,7 +226,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 9,
+                Cond = ConditionType.QuestTaken,
                 Val1 = (uint)arg.Value,
                 Val2 = 0u
             };
@@ -246,7 +246,7 @@ namespace Mangos.Framework
         {
             return new Condition()
             {
-                Cond = 10,
+                Cond = ConditionType.AdCommissionAura,
                 Val1 = 0u,
                 Val2 = 0u
             };
@@ -268,7 +268,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 12,
+                Cond = ConditionType.ActiveGameEvent,
                 Val1 = (uint)arg.Value,
                 Val2 = 0u
             };
@@ -293,7 +293,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 13,
+                Cond = ConditionType.AreaFlag,
                 Val1 = not ? 0xFFu : (uint)arg.Value,
                 Val2 = not ? (uint)arg.Value : 0xFFu
             };
@@ -321,7 +321,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 14,
+                Cond = ConditionType.RaceClass,
                 Val1 = (uint)arg.Value,
                 Val2 = 0xFFu
             };
@@ -333,7 +333,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 14,
+                Cond = ConditionType.RaceClass,
                 Val1 = 0xFFu,
                 Val2 = (uint)arg.Value
             };
@@ -367,7 +367,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 15,
+                Cond = ConditionType.Level,
                 Val1 = (uint)arg.Value,
                 Val2 = val2
             };
@@ -407,7 +407,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 17,
+                Cond = ConditionType.Spell,
                 Val1 = (uint)arg.Value,
                 Val2 = not ? 1u : 0u
             };
@@ -429,7 +429,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 19,
+                Cond = ConditionType.QuestAvailable,
                 Val1 = (uint)arg.Value,
                 Val2 = 0u
             };
@@ -454,7 +454,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 20,
+                Cond = ConditionType.Achievement,
                 Val1 = (uint)arg.Value,
                 Val2 = not ? 1u : 0u
             };
@@ -479,7 +479,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = 21,
+                Cond = ConditionType.AchievementRealm,
                 Val1 = (uint)arg.Value,
                 Val2 = not ? 1u : 0u
             };
