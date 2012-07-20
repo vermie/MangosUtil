@@ -263,9 +263,12 @@ namespace Mangos.Framework
 
         #endregion
 
-        #region CONDITION_ACTIVE_EVENT
+        #region CONDITION_ACTIVE_GAME_EVENT, CONDITION_NOT_ACTIVE_GAME_EVENT
 
-        [Condition]
+        /// <summary>
+        /// Use <example>!IsEventActive(...)</example> to validate the event is inactive.
+        /// </summary>
+        [Condition(Negatable = true)]
         public bool IsEventActive(uint eventId)
         {
             return true;
@@ -277,7 +280,7 @@ namespace Mangos.Framework
 
             return new Condition()
             {
-                Cond = ConditionType.ActiveGameEvent,
+                Cond = not ? ConditionType.NotActiveGameEvent : ConditionType.ActiveGameEvent,
                 Val1 = (uint)arg.Value,
                 Val2 = 0u
             };
