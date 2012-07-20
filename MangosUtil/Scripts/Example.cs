@@ -15,11 +15,11 @@ namespace Mangos.Scripts
             this.AddCondition("big expression", c => (c.HasAura(1234, 1) && c.IsHorde()) || (c.HasAura(1235, 1) && c.IsAlliance()));
             
             this.AddCondition("large condition", c => (!c.HasAchievement(5678) && c.HasAura(1234, 0)) ||
-                                                      (c.HasAreaFlag(1234) || c.HasItem(1234, 20) || c.IsAlliance()));
+                                                      (c.HasAreaFlag(1234) || c.HasItem(1234, 20, false) || c.IsAlliance()));
 
             this.AddCondition("complicated thing", c => (c.IsHorde() && c.IsOverLevel(70)) ||
                                                         ((!c.HasAchievement(5678) && c.HasAura(1234, 0)) ||
-                                                         (c.HasAreaFlag(1234) || c.HasItem(1234, 20) || c.IsAlliance())));
+                                                         (c.HasAreaFlag(1234) || c.HasItem(1234, 20, true) || c.IsAlliance())));
         }
     }
 }

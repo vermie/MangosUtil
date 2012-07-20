@@ -41,13 +41,13 @@ namespace Mangos.Framework
 
         #endregion
 
-        #region CONDITION_ITEM, CONDITION_NO_ITEM
+        #region CONDITION_ITEM, CONDITION_NO_ITEM, CONDITION_ITEM_WITH_BANK, CONDITION_NOITEM_WITH_BANK
 
         /// <summary>
         /// Use <example>!HasItem(...)</example> to validate the non-existence of specified item.
         /// </summary>
         [Condition(Negatable = true)]
-        public bool HasItem(uint itemId, uint count)
+        public bool HasItem(uint itemId, uint count, bool searchBank)
         {
             return true;
         }
@@ -56,9 +56,18 @@ namespace Mangos.Framework
         {
             var args = expr.Arguments.Cast<ConstantExpression>().ToArray();
 
+            bool searchBank = (bool)args[2].Value;
+
+            ConditionType cond;
+
+            if (searchBank)
+                cond = not ? ConditionType.NoItemWithBank : ConditionType.ItemWithBank;
+            else
+                cond = not ? ConditionType.NoItem : ConditionType.Item;
+
             return new Condition()
             {
-                Cond = not ? ConditionType.NoItem : ConditionType.Item,
+                Cond = cond,
                 Val1 = (uint)args[0].Value,
                 Val2 = (uint)args[1].Value
             };
