@@ -13,7 +13,7 @@ namespace Mangos.Framework
             set;
         }
     }
-    
+
     public class ConditionFacade
     {
         #region CONDITION_AURA, CONDITION_NO_AURA
