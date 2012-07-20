@@ -486,6 +486,28 @@ namespace Mangos.Framework
         }
 
         #endregion
+
+        #region CONDITION_QUESTNONE
+
+        [Condition]
+        public bool HasNeverHadQuest(uint questId)
+        {
+            return true;
+        }
+
+        private static Condition ParseHasNeverHadQuest(MethodCallExpression expr, bool not)
+        {
+            var arg = (ConstantExpression)expr.Arguments[0];
+
+            return new Condition()
+            {
+                Cond = ConditionType.QuestNone,
+                Val1 = (uint)arg.Value,
+                Val2 = 0u
+            };
+        }
+
+        #endregion
     }
 }
 
