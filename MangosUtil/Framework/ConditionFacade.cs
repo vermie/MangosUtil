@@ -177,7 +177,7 @@ namespace Mangos.Framework
 
         #endregion
 
-        #region CONDITION_SKILL
+        #region CONDITION_SKILL, CONDITION_SKILL_BELOW
 
         [Condition]
         public bool IsSkillAtLevel(uint skillId, uint minLevel)
@@ -194,6 +194,42 @@ namespace Mangos.Framework
                 Cond = ConditionType.Skill,
                 Val1 = (uint)args[0].Value,
                 Val2 = (uint)args[1].Value
+            };
+        }
+
+        [Condition]
+        public bool IsSkillUnderLevel(uint skillId, uint level)
+        {
+            return true;
+        }
+
+        [Condition]
+        public bool DoesntKnowSkill(uint skillId)
+        {
+            return true;
+        }
+
+        private static Condition ParseIsSkillUnderLevel(MethodCallExpression expr, bool not)
+        {
+            var args = expr.Arguments.Cast<ConstantExpression>().ToArray();
+
+            return new Condition()
+            {
+                Cond = ConditionType.SkillBelow,
+                Val1 = (uint)args[0].Value,
+                Val2 = (uint)args[1].Value
+            };
+        }
+
+        private static Condition ParseDoesntKnowSkill(MethodCallExpression expr, bool not)
+        {
+            var args = expr.Arguments.Cast<ConstantExpression>().ToArray();
+
+            return new Condition()
+            {
+                Cond = ConditionType.SkillBelow,
+                Val1 = (uint)args[0].Value,
+                Val2 = 1u
             };
         }
 
